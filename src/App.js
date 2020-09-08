@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Button from '@material-ui/core/Button';
 import './App.css';
+import Post from './components/Post/Post';
+
 
 function App() {
+  
+  const [posts, setPosts] = useState([]);
+
+  useEffect ( ()=> {
+    const url =`https://jsonplaceholder.typicode.com/posts`
+    fetch (url)
+    .then (res=> res.json())
+    .then (data => setPosts(data))
+
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     <h1> Post :{posts.length}</h1>
+
+     {
+       posts.map(post => <Post post = {post}>  </Post>)
+     }
+      
+    <Button color="primary"> Hello World</Button>
+      
     </div>
   );
+
+
 }
 
 export default App;
