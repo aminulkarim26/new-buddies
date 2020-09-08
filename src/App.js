@@ -1,31 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
 import './App.css';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} 
+from "react-router-dom";
+
+import Home from './components/Home/Home';
+import NoMatch from './components/NoMatch/NoMatch';
 import Post from './components/Post/Post';
+import PostDetail from './components/PostDetail/PostDetail';
+
+
+
 
 
 function App() {
-  
-  const [posts, setPosts] = useState([]);
 
-  useEffect ( ()=> {
-    const url =`https://jsonplaceholder.typicode.com/posts`
-    fetch (url)
-    .then (res=> res.json())
-    .then (data => setPosts(data))
 
-  },[])
+
   return (
-    <div>
-     <h1> Post :{posts.length}</h1>
-
-     {
-       posts.map(post => <Post post = {post}>  </Post>)
-     }
-      
-    <Button color="primary"> Hello World</Button>
-      
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/home">
+          <Home></Home>
+        </Route>
+        <Route path="/post/:postId">
+          <PostDetail> </PostDetail>
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="*">
+          <NoMatch />
+        </Route>
+        <Route path ="/post">
+          <Post></Post>
+        </Route>
+    
+    </Switch>
+    </Router>
   );
 
 
